@@ -15,12 +15,12 @@
 <body>
 <div id="map" style="width: 1024px; height: 768px"></div>
 <script>
-// initialize the map on the "map" div with a given center and zoom
+// initialize map as satellite view of world
 var map = L.map('map', {
-    center: [51.505, -0.09],
-    zoom: 13
+    center: [0.0, 0.0],
+    zoom: 2
 });
-var googleLayer = new L.Google('ROADMAP');
+var googleLayer = new L.Google('SATELLITE');
 map.addLayer(googleLayer);
 </script>
 
