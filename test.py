@@ -2,21 +2,17 @@
 
 import json
 
-f = open('./TLE.json','r')
-TLE = f.read()
-f.close()
+def readConfig(filename):
+    f = open('./config/'+filename,'r')
+    FILE = f.read()
+    f.close()
+    
+    JSON = json.loads(FILE)
+    return JSON
 
-decoded = json.loads(TLE)
+TLE = readConfig('TLE.json')
+print TLE['epochTime']
+print TLE['decayRate']
 
-print decoded['epochTime']
-print decoded['decayRate']
-
-f = open('./Observer.json','r')
-Observer = f.read()
-f.close()
-
-decoded2 = json.loads(Observer)
-
-print decoded2['obsLatitude']
-
-
+Observer = readConfig('Observer.json')
+print Observer['obsLatitude']
