@@ -101,7 +101,26 @@ INS = radians(23.4393)        # Solar inclination
 EQC1 = 0.03342                # Sun's equation of centre terms
 EQC2 = 0.00035                # Sun's equation of centre terms
 
+# Bring Sun data to satellite epoch
 
+# Antenna unit vector in orbit plane coordinates
 
+aLong = TLE['aLong']
+aLat = TLE['aLat']
 
+ANvec = [ -cos(radians(aLat)) * cos(radians(aLong)),
+          -cos(radians(aLat)) * sin(radians(aLong)),
+          -sin(radians(aLat)) ]
+
+# Calculate Satellite position at Day DN, Time TN
+
+def satVector():
+
+# Calculate Sun unit vector
+
+def sunVector():
+
+# Calculate range/velocity/antenna vectors 
+
+def rangeVector():
 
