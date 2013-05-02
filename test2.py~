@@ -82,6 +82,12 @@ VOvec = [ -Ovec[Y] * W0,
 
 
 # Average precession rates
+GM = 3.986E5                  # Earth's Gravitational Constant km^3/s^2
+J2 = 1.08263E-3               # 2nd Zonal Coeff, Earth's Gravity Field
+N0 = meanMotion / 86400       # Mean motion, rad/s
+A0 = (GM/N0/N0) ** (1/3)      # Semi-major axis, km
+B0 = A0 * sqrt(1 - Ecc * Ecc) # Semi-minor axis, km
+
 
 
 
