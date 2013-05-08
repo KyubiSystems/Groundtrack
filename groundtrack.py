@@ -9,13 +9,7 @@ from math import radians, degrees, cos, sin, sqrt
 from math import pi as PI
 from datetime import datetime, timedelta
 
-def readConfig(filename):
-    f = open('./config/'+filename,'r')
-    FILE = f.read()
-    f.close()
-    
-    JSON = json.loads(FILE)
-    return JSON
+from file_utils import readConfig
 
 TLE = readConfig('TLE.json')
 print TLE['epochTime']
