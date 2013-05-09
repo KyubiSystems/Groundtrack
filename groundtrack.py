@@ -5,7 +5,7 @@
 
 import json
 
-from math import radians, degrees, cos, sin, sqrt
+from math import radians, degrees, cos, sin, sqrt, abs
 from math import pi as PI
 from datetime import datetime, timedelta
 
@@ -72,8 +72,9 @@ VOvec = [ -Ovec[Y] * W0,
            Ovec[X] * W0,
            0 ]
 
-# Convert satellite epoch to Day Number
-
+# Convert satellite epoch to Day Number and fraction of day
+DE = fnDay(YE, 1, 0) + int(TE)
+TE = TE - int(TE)
 
 # Average precession rates
 GM = 3.986E5                  # Earth's Gravitational Constant km^3/s^2
@@ -96,6 +97,10 @@ EQC1 = 0.03342                # Sun's equation of centre terms
 EQC2 = 0.00035                # Sun's equation of centre terms
 
 # Bring Sun data to satellite epoch
+TEG  = (DE - fnDay(YG, 1, 0)) + TE   # Elapsed Time: Epoch - YG
+GHAE = radians(G0) + TEG*WE          # GHA Aries, epoch
+MRSE = radians(G0) + TEG*WW + PI     # Mean RA of Sun at Sat epoch
+MASE = radians(MAS0 + MASD * TEG)    # Mean MA of Sun at Sat epoch 
 
 # Antenna unit vector in orbit plane coordinates
 
@@ -109,6 +114,38 @@ ANvec = [ -cos(radians(aLat)) * cos(radians(aLong)),
 # Calculate Satellite position at Day DN, Time TN
 
 def satVector():
+    T   = (DN - DE) + (TN - TE)      # Elapsed T since epoch, days
+    DT  = DC * T/2                   # Linear drag terms
+    KD  = 1 + 4*DT                   # ...
+    KDP = 1 - 7*DT                   # ...
+
+    M = MA + MM*T * (1 - 3*DT)       # Mean anomaly at YR, TN
+    DR = int( M / (2*PI) )           # Strip out whole number of revs
+    M = M - DR*2*PI                  # M now in range 0 - 2pi
+    RN = RV + DR                     # Current Orbit Number
+
+# Solve M = EA - EC*sin(EA) for EA given M, by Newton's method
+
+    EA = M                           # Initial solution
+    converged = False
+    while not converged:
+        C = cos(EA)
+        S = sin(EA)
+        DNOM = 1 - EC*C
+        D = (EA - EC*S - M)/DNOM
+        EA = EA - D
+        converged = (abs(D) < 1e-5)
+
+    A = A0 * KD
+    B = B0 * KD
+    RS = A * DNOM
+
+# Calculate satellite position in plane of ellipse
+    Svec = [ A * (C-EC),
+             B * S ]
+
+    Vvec = [ -A * S / (DNOM * N0),
+              B * C / (DNOM * N0) ]
 
 # Calculate Sun unit vector
 
