@@ -6,6 +6,7 @@
 import json
 
 from math import radians, degrees, cos, sin, sqrt, abs
+from math import acos, asin, atan, atan2
 from math import pi as PI
 from datetime import datetime, timedelta
 
@@ -147,12 +148,40 @@ def satVector():
     Vvec = [ -A * S / (DNOM * N0),
               B * C / (DNOM * N0) ]
 
+    CW = cos(WP + WD*T*KDP)
+    SW = sin(WP + WD*T*KDP)
+
+    RAAN = RA + QD*T*KDP
+    CQ = cos(RAAN)
+    SQ = sin(RAAN)
+
 # Plane->celestial coordinate transformations, [C] = [RAAN] * [IN] * [AP]
+
+    CXvec = [ CW*CQ-SW*CI*SQ,
+              -SW*CQ-CW*CI*SQ,
+              SI*SQ ]
+
+    CYvec = [ CW*SQ+SW*CI*CQ,
+              -SW*SQ+CW*CI*CQ,
+              -SI*CQ ]
+
+    CZvec = [ SW*SI,
+              CW*SI,
+              CI ]
 
 # Compute SATellite's position vector, ANTenna axis unit vector
 # and velocity in CELESTIAL coordinates (Note: Sz=0, Vz=0)
 
+    SATvec = [ Sx*CXvec(X) + Sy*CXvec(Y),
+               Sx*CYvec(X) + Sy*CYvec(Y),
+               Sx*CZvec(X) + Sy*CZvec(Y) ]
+
+    ANTvec = [ ax*CXvec(X) + ay*CXvec(Y) + az*CXvec(Z),
+               ax*CYvec(X) + ay*CYvec(Y) + az*CYvec(Z),
+               ax*CZvec(X) + ay*CZvec(Y) + az*CZvec(Z) ]
+
 # Also express SAT, ANT and VEL in geocentric coordinates
+
 
 
 # ----------------------------------------
