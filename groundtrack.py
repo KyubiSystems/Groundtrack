@@ -147,11 +147,46 @@ def satVector():
     Vvec = [ -A * S / (DNOM * N0),
               B * C / (DNOM * N0) ]
 
+# Plane->celestial coordinate transformations, [C] = [RAAN] * [IN] * [AP]
+
+# Compute SATellite's position vector, ANTenna axis unit vector
+# and velocity in CELESTIAL coordinates (Note: Sz=0, Vz=0)
+
+# Also express SAT, ANT and VEL in geocentric coordinates
+
+
+# ----------------------------------------
 # Calculate Sun unit vector
 
 def sunVector():
-
+    pass
+# ----------------------------------------
 # Calculate range/velocity/antenna vectors 
 
 def rangeVector():
+    pass
+
+# ----------------------------------------
+# Convert day-number to date; valid 1900 Mar 01 - 2100 Feb 28
+
+def fnDate():
+    pass
+
+# ----------------------------------------
+# Convert date to day-number
+
+def fnDay():
+    pass
+
+# ----------------------------------------
+# Compute satellite footprint on Earth
+
+def satFoot():
+    pass
+
+# Take satellite distance, sub-satellite lat/long and compute unit vectors'
+# x,y,z of N points of footprint on Earth's surface in Geocentric coordinates
+# Also terrestrial latitude, longitude of points
+
+
 
