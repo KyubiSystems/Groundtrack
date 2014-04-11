@@ -20,8 +20,8 @@ from sgp4.io import twoline2rv
 # no         - Mean motion in radians per minute
 
 # Test TLE for Hubble Space Telescope
-line1 = '20580U 90037B   14101.16170949  .00002879  00000-0  18535-3 0  4781'
-line2 = '20580 028.4694 117.6639 0002957 290.9180 143.6730 15.05140277114603'
+line1 = ('20580U 90037B   14101.16170949  .00002879  00000-0  18535-3 0  4781')
+line2 = ('20580 028.4694 117.6639 0002957 290.9180 143.6730 15.05140277114603')
 
 satellite = twoline2rv(line1, line2, wgs72)
 
