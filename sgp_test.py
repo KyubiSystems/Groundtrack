@@ -1,5 +1,5 @@
 from sgp4.earth_gravity import wgs72
-from sgp.io import twoline2rv
+from sgp4x.io import twoline2rv
 
 # twoline2rv() function returns a Satellite object whose attributes
 # carry the data loaded from the TLE entry
