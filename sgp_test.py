@@ -4,6 +4,8 @@ from sgp4.io import twoline2rv
 from math import atan2, cos, pi, sin, sqrt, tan
 from datetime import datetime
 
+from sidereal import utcDatetime2gmst, ymd2jd
+
 # twoline2rv() function returns a Satellite object whose attributes
 # carry the data loaded from the TLE entry
 
@@ -66,3 +68,9 @@ lat, lon, alt = groundtrack(position)
 print str(lat)
 print str(lon)
 print str(alt)
+
+date = datetime(year=2000, month=6, day=29, hour=12, minute=56, second=19)
+
+gmst = utcDatetime2gmst(date)
+
+print gmst

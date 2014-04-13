@@ -1,3 +1,6 @@
+import datetime
+import math
+
 def ymd2jd(year, month, day):
         """ 
         Converts a year, month, and day to a Julian Date.
@@ -74,3 +77,42 @@ def utcDatetime2gmst(datetimeObj):
         h,m,s = dec2sex(GST)
         return datetime.datetime(year=datetimeObj.year, month=datetimeObj.month, day=datetimeObj.day, hour=h, minute=m, second=int(s), microsecond=int((s-int(s))*10**6))
         
+def datetime2decHours(time):
+        """ 
+        Converts a datetime.time or datetime.datetime object into decimal time.
+        
+        Parameters
+        ----------
+        time : datetime.time or datetime.datetime
+        
+        Returns
+        -------
+        decTime : float
+                A decimal number representing the input time
+        
+        """
+        return time.hour + time.minute/60.0 + time.second/3600.0 + time.microsecond/3600000000.0
+
+def dec2sex(deci):
+        """ 
+        Converts a Decimal number (in hours or degrees) to Sexagesimal.
+        
+        Parameters
+        ----------
+        deci : float
+                A decimal number to be converted to Sexagismal.
+        
+        Returns
+        -------
+        hd : int
+                hours or degrees
+        m : int
+                minutes or arcminutes
+        s : float
+                seconds or arcseconds
+        
+        """
+        (hfrac, hd) = math.modf(deci)
+        (min_frac, m) = math.modf(hfrac * 60)
+        s = min_frac * 60.
+        return (int(hd), int(m), s)
