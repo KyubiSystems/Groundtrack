@@ -2,7 +2,7 @@ from sgp4.earth_gravity import wgs72
 from sgp4.io import twoline2rv
 
 from math import atan2, cos, pi, sin, sqrt, tan
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from sidereal import utcDatetime2gmst, ymd2jd
 
@@ -59,6 +59,8 @@ satellite = twoline2rv(line1, line2, wgs72)
 
 date = datetime(2000, 6, 29, 12, 46, 19)
 
+delta = timedelta(minutes=1)
+
 position, velocity = satellite.propagate(date.year, date.month, date.day, date.hour, date.minute, date.second)
 
 print position
@@ -73,7 +75,6 @@ print str(alt)
 
 gmst = utcDatetime2gmst(date)
 
-print date.timetuple()
 print gmst
 
 lon = (gmst * 15.0) - gmra
@@ -84,3 +85,6 @@ lon = ((lon + 180.0) % 360.0) - 180.0
 print lonraw
 print lon
 
+date2 = date+delta
+
+print date2
