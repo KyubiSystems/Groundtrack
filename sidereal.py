@@ -74,9 +74,11 @@ def utcDatetime2gmst(datetimeObj):
         
         GST = T0 % 24
 
-        h,m,s = dec2sex(GST)
-        return datetime.datetime(year=datetimeObj.year, month=datetimeObj.month, day=datetimeObj.day, hour=h, minute=m, second=int(s), microsecond=int((s-int(s))*10**6))
-        
+#        h,m,s = dec2sex(GST)
+#        return datetime.datetime(year=datetimeObj.year, month=datetimeObj.month, day=datetimeObj.day, hour=h, minute=m, second=int(s), microsecond=int((s-int(s))*10**6))
+ 
+	return GST
+       
 def datetime2decHours(time):
         """ 
         Converts a datetime.time or datetime.datetime object into decimal time.

@@ -57,20 +57,30 @@ line2 = ('2 20580 028.4694 117.6639 0002957 '
 
 satellite = twoline2rv(line1, line2, wgs72)
 
-position, velocity = satellite.propagate(2000, 6, 29, 12, 56, 19)
+date = datetime(2000, 6, 29, 12, 46, 19)
+
+position, velocity = satellite.propagate(date.year, date.month, date.day, date.hour, date.minute, date.second)
 
 print position
 
 print velocity
 
-lat, lon, alt = groundtrack(position)
+lat, gmra, alt = groundtrack(position)
 
 print str(lat)
-print str(lon)
+print str(gmra)
 print str(alt)
-
-date = datetime(year=2000, month=6, day=29, hour=12, minute=56, second=19)
 
 gmst = utcDatetime2gmst(date)
 
+print date.timetuple()
 print gmst
+
+lon = (gmst * 15.0) - gmra
+
+lonraw = lon
+lon = ((lon + 180.0) % 360.0) - 180.0
+
+print lonraw
+print lon
+
