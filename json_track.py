@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from sgp4.earth_gravity import wgs72
 from sgp4.io import twoline2rv
 

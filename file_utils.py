@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 def readConfig(filename):
 
     import json
