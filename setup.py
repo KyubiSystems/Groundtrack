@@ -1,0 +1,21 @@
+from bottle import route, run, static_file, template
+from orbitdata import geojson
+
+# Returns GeoJSON line segment for satellite groundtrack
+@route('/trackdata')
+def trackdata():
+    groundtrack = geojson()
+    return groundtrack
+
+# Helper function to return path to static file
+@route('/data/<filename>')
+def server_static(filename):
+    return static_file(filename, root='/path/to/your/static/files')
+
+# Main template to render world map
+# Map template stored in ./views/map_template.tpl
+@route('/worldmap')
+def worldmap():
+    return template('map_template')
+
+run(host='localhost', port=8081, debug=True)

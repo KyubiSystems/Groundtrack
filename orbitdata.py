@@ -51,58 +51,59 @@ def groundtrack(vector):
 
     return (lat, lon, alt)
 
-# Test TLE for Hubble Space Telescope
-line1 = ('1 20580U 90037B   14101.16170949  '
-         '.00002879  00000-0  18535-3 0  4781')
-line2 = ('2 20580 028.4694 117.6639 0002957 '
-         '290.9180 143.6730 15.05140277114603')
-
-satellite = twoline2rv(line1, line2, wgs72)
-
-date = datetime(2000, 6, 29, 12, 46, 19)
-
-delta = timedelta(minutes=1)
-
+def geojson():
+    # Test TLE for Hubble Space Telescope
+    line1 = ('1 20580U 90037B   14101.16170949  '
+             '.00002879  00000-0  18535-3 0  4781')
+    line2 = ('2 20580 028.4694 117.6639 0002957 '
+             '290.9180 143.6730 15.05140277114603')
+    
+    satellite = twoline2rv(line1, line2, wgs72)
+    
+    date = datetime(2000, 6, 29, 12, 46, 19)
+    
+    delta = timedelta(minutes=1)
+    
 # empty array for GeoJSON LineString for groundtrack plotting
-points = []
-
+    points = []
+    
 # Loop in one-minute steps to calculate track
-for n in range(0,30):
-
+    for n in range(0,30):
+        
     #print date
-
-    position, velocity = satellite.propagate(date.year, date.month, date.day, date.hour, date.minute, date.second)
-
+        
+        position, velocity = satellite.propagate(date.year, date.month, date.day, date.hour, date.minute, date.second)
+        
     #print position
-
+        
     #print velocity
-    
-    lat, gmra, alt = groundtrack(position)
-    
+        
+        lat, gmra, alt = groundtrack(position)
+        
     #print str(lat)
     #print str(gmra)
     #print str(alt)
-    
-    gmst = utcDatetime2gmst(date)
-    
+        
+        gmst = utcDatetime2gmst(date)
+        
     #print gmst
-    
-    lon = (gmst * 15.0) - gmra
-    
-    lon = ((lon + 180.0) % 360.0) - 180.0
-    
+        
+        lon = (gmst * 15.0) - gmra
+        
+        lon = ((lon + 180.0) % 360.0) - 180.0
+        
     #print lon
-    
-    # add current point coordinates to GeoJSON LineString array
-
-    points.append( [ lon, lat ] )
-
-    date = date+delta
-
+        
+# add current point coordinates to GeoJSON LineString array
+        
+        points.append( [ lon, lat ] )
+        
+        date = date+delta
+        
 # Generate GeoJSON LineString for groundtrack
-line = { "type": "LineString", "coordinates": points }
-
+        line = { "type": "LineString", "coordinates": points }
+        
 # Bottle function returns dict as JSON
-return line
+    return line
 
 
