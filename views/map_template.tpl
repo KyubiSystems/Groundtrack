@@ -39,6 +39,10 @@ d3.json("./data/world-50m.json", function(error, world) {
       .attr("d", path);
 });
 
+d3.json("/trackdata", function(error, track) {
+  console.log(track);
+});
+
 function cylindrical(width, height) {
   return d3.geo.projection(function(λ, φ) { return [λ, φ * 2 / width * height]; })
       .scale(width / 2 / Math.PI)

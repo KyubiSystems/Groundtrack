@@ -11,7 +11,7 @@ def trackdata():
 # Helper function to return path to static file
 @route('/data/<filename>')
 def server_static(filename):
-    STATIC_PATH = APP_PATH + 'static/files'
+    STATIC_PATH = APP_PATH + 'data'
     return static_file(filename, root = STATIC_PATH)
 
 # Main template to render world map
