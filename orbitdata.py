@@ -68,7 +68,7 @@ def geojson():
     points = []
     
 # Loop in one-minute steps to calculate track
-    for n in range(0,30):
+    for n in range(0,90):
         
     #print date
         
