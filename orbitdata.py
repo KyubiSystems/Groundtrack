@@ -101,7 +101,7 @@ def geojson():
         date = date+delta
         
 # Generate GeoJSON LineString for groundtrack
-        line = { "type": "LineString", "coordinates": points }
+        line = { "type": "FeatureCollection", "features": { "type": "LineString", "coordinates": points } }
         
 # Bottle function returns dict as JSON
     return line

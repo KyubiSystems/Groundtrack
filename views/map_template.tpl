@@ -27,7 +27,6 @@ var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height);
 
-
 d3.json("./data/world-50m.json", function(error, world) {
   svg.append("path")
       .datum(topojson.feature(world, world.objects.land))
@@ -47,14 +46,15 @@ function cylindrical(width, height) {
 }
 
 d3.json("/trackdata", function(error, track) {
-  svg.selectAll(".geojson").data([track])
+  svg.selectAll(".geojson").data(track.features)
      .enter()
      .append("path")
      .attr("d", path)
      .style({
         stroke: '#0000ff',
         'stroke-width': '2px'
-        });
+        })
+     .moveToFront();
 });
 
 </script>
