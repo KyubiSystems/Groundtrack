@@ -2,13 +2,22 @@
 <meta charset="utf-8">
 <style>
 
+body {
+ background-color: #000;
+}
+
 .land {
-  fill: #ccc;
+  fill: #696;
 }
 
 .country-border {
   fill: none;
-  stroke: #fff;
+  stroke: #aca;
+}
+
+.satellite {
+  fill: none;
+  stroke: #f00;
 }
 
 </style>
@@ -46,15 +55,12 @@ function cylindrical(width, height) {
 }
 
 d3.json("/trackdata", function(error, track) {
-  svg.selectAll(".geojson").data(track.features)
+  svg.selectAll(".geojson")
+     .data([track])
      .enter()
      .append("path")
      .attr("d", path)
-     .style({
-        stroke: '#0000ff',
-        'stroke-width': '2px'
-        })
-     .moveToFront();
+     .attr("class", "satellite");
 });
 
 </script>
