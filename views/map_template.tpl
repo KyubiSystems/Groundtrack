@@ -20,6 +20,10 @@ body {
   stroke: #f00;
 }
 
+.now {
+  fill: #f00;
+}
+
 </style>
 <body>
 <script src="http://d3js.org/d3.v3.min.js"></script>
@@ -55,12 +59,27 @@ function cylindrical(width, height) {
 }
 
 d3.json("/trackdata", function(error, track) {
+
+  point = {type: "Point", coordinates: track.coordinates[0]}
+
+  console.log(point);
+  console.log(track);
+
+  svg.selectAll(".geojson")
+     .data([point])
+     .enter()
+     .append("path")
+     .attr("d", path)
+     .attr("r", 5)
+     .attr("class","now");
+
   svg.selectAll(".geojson")
      .data([track])
      .enter()
      .append("path")
      .attr("d", path)
      .attr("class", "satellite");
+
 });
 
 </script>
