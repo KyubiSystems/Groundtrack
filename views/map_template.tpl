@@ -46,14 +46,21 @@ body {
 var width = 1600,
     height = 900;
 
+var projection = d3.geo.equirectangular()
+    .scale(210)
+    .translate([width / 2, height / 2])
+    .precision(.1);
+
 var path = d3.geo.path()
-    .projection(cylindrical(width, height));
+    .projection(projection);
 
 var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height);
 
 d3.json("./data/world-50m.json", function(error, world) {
+  if (error) throw error;
+
   svg.append("path")
       .datum(topojson.feature(world, world.objects.land))
       .attr("class", "land")
@@ -65,20 +72,12 @@ d3.json("./data/world-50m.json", function(error, world) {
       .attr("d", path);
 });
 
-function cylindrical(width, height) {
-  return d3.geo.projection(function(λ, φ) { return [λ, φ * 2 / width * height]; })
-      .scale(width / 2 / Math.PI)
-      .translate([width / 2, height / 2]);
-}
-
 d3.json("/trackdata", function(error, track) {
 
   point = {type: "Point", coordinates: track.coordinates[0]}
 
   console.log(point);
   console.log(track);
-
-  console.log(cylindrical(width, height));
 
   svg.selectAll(".satellite")
      .data([track])
@@ -100,12 +99,13 @@ d3.json("/trackdata", function(error, track) {
      .enter()
      .append("text")
      .attr("class","text-label")
-//     .attr("transform", "translate(" + projection(point.coordinates[0], point.coordinates[1]) + ")";)
-     .attr("x", 180)
-     .attr("y", 420)
-//     .attr("d", path)
+     .attr("transform", "translate(" + projection(point.coordinates) + ")" )
+     .attr("dx", 8)
+     .attr("dy", -5)
      .text('HST');
 
 });
+
+d3.select(self.frameElement).style("height", height + "px");
 
 </script>

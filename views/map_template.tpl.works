@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<head>
 <meta charset="utf-8">
 <style>
 
@@ -8,7 +9,7 @@ body {
 
 .land {
   fill: none;
-  stroke: #696;
+  stroke: #8b8;
   stroke-width: 2;
 }
 
@@ -24,17 +25,19 @@ body {
 }
 
 .text-label {
-  fill: #f00;
+  fill: #fcc;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 15px;
-  font-weight: 300;
+  font-weight: 200;
 }
 
 .now {
-  fill: #f00;
+  fill: #faa;
 }
 
 </style>
+<title>Groundtrack: World Map</title>
+</head>
 <body>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/topojson.v1.min.js"></script>
@@ -75,7 +78,16 @@ d3.json("/trackdata", function(error, track) {
   console.log(point);
   console.log(track);
 
-  svg.selectAll(".geojson")
+  console.log(cylindrical(width, height));
+
+  svg.selectAll(".satellite")
+     .data([track])
+     .enter()
+     .append("path")
+     .attr("d", path)
+     .attr("class", "satellite");
+
+  svg.selectAll(".now")
      .data([point])
      .enter()
      .append("path")
@@ -87,19 +99,12 @@ d3.json("/trackdata", function(error, track) {
      .data([point])
      .enter()
      .append("text")
-     .attr("d", path)
      .attr("class","text-label")
-     .attr("x", point.coordinates[0])
-     .attr("y", point.coordinates[1])
-     .attr("dy", ".35em")
-     .text(function(d) { return 'HST'; });
-
-  svg.selectAll(".geojson")
-     .data([track])
-     .enter()
-     .append("path")
-     .attr("d", path)
-     .attr("class", "satellite");
+//     .attr("transform", "translate(" + projection(point.coordinates[0], point.coordinates[1]) + ")";)
+     .attr("x", 180)
+     .attr("y", 420)
+//     .attr("d", path)
+     .text('HST');
 
 });
 
