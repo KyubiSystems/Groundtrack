@@ -58,15 +58,18 @@ var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height);
 
+svg.append("g").attr("id", "map");
+svg.append("g").attr("id", "track");
+  
 d3.json("./data/world-50m.json", function(error, world) {
   if (error) throw error;
 
-  svg.append("path")
+    svg.select("#map").append("path")
       .datum(topojson.feature(world, world.objects.land))
       .attr("class", "land")
       .attr("d", path);
 
-  svg.append("path")
+    svg.select("#map").append("path")
       .datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
       .attr("class", "country-border")
       .attr("d", path);
@@ -79,13 +82,13 @@ d3.json("/trackdata", function(error, track) {
   console.log(point);
   console.log(track);
 
-  svg.selectAll(".satellite")
+    svg.select("#track").selectAll(".satellite")
      .data([track])
      .enter()
      .append("path")
      .attr("d", path)
      .attr("class", "satellite");
-
+    
   svg.selectAll(".now")
      .data([point])
      .enter()
