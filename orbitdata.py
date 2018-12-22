@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
+from math import atan2, cos, pi, sin, sqrt
+from datetime import datetime, timedelta
+
 from sgp4.earth_gravity import wgs72
 from sgp4.io import twoline2rv
-
-from math import atan2, cos, pi, sin, sqrt, tan
-from datetime import datetime, timedelta
 
 from sidereal import utcDatetime2gmst, ymd2jd
 
@@ -37,13 +37,13 @@ def groundtrack(vector):
     e = 8.1819190842622e-2
 
     # Groundtrack
-    b = sqrt(pow(a,2) * (1-pow(e,2)))
-    ep = sqrt((pow(a,2)-pow(b,2))/pow(b,2))
-    p = sqrt(pow(x,2)+pow(y,2))
+    b = sqrt(pow(a, 2) * (1-pow(e, 2)))
+    ep = sqrt((pow(a, 2)-pow(b, 2))/pow(b, 2))
+    p = sqrt(pow(x, 2)+pow(y, 2))
     th = atan2(a*z, b*p)
     lon = atan2(y, x)
-    lat = atan2((z+ep*ep*b*pow(sin(th),3)), (p-e*e*a*pow(cos(th),3)))
-    n = a/sqrt(1-e*e*pow(sin(lat),2))
+    lat = atan2((z+ep*ep*b*pow(sin(th), 3)), (p-e*e*a*pow(cos(th), 3)))
+    n = a/sqrt(1-e*e*pow(sin(lat), 2))
 
     alt = p/cos(lat)-n
     lat = (lat*180)/pi
@@ -57,53 +57,52 @@ def geojson():
              '.00002879  00000-0  18535-3 0  4781')
     line2 = ('2 20580 028.4694 117.6639 0002957 '
              '290.9180 143.6730 15.05140277114603')
-    
+
     satellite = twoline2rv(line1, line2, wgs72)
-    
+
     date = datetime(2000, 6, 29, 12, 46, 19)
-    
+
     delta = timedelta(minutes=1)
-    
+
 # empty array for GeoJSON LineString for groundtrack plotting
     points = []
-    
+
 # Loop in one-minute steps to calculate track
-    for n in range(0,90):
-        
+    for n in range(0, 90):
+
     #print date
-        
-        position, velocity = satellite.propagate(date.year, date.month, date.day, date.hour, date.minute, date.second)
-        
+
+        position, velocity = satellite.propagate(date.year, date.month, date.day,
+                                                 date.hour, date.minute, date.second)
+
     #print position
-        
+
     #print velocity
-        
+
         lat, gmra, alt = groundtrack(position)
-        
+
     #print str(lat)
     #print str(gmra)
     #print str(alt)
-        
+
         gmst = utcDatetime2gmst(date)
-        
+
     #print gmst
-        
+
         lon = (gmst * 15.0) - gmra
-        
+
         lon = ((lon + 180.0) % 360.0) - 180.0
-        
+
     #print lon
-        
-# add current point coordinates to GeoJSON LineString array
-        
-        points.append( [ lon, lat ] )
-        
+
+        # add current point coordinates to GeoJSON LineString array
+
+        points.append([lon, lat])
+
         date = date+delta
-        
-# Generate GeoJSON LineString for groundtrack
-        line = { "type": "LineString", "coordinates": points }
-        
-# Bottle function returns dict as JSON
+
+    # Generate GeoJSON LineString for groundtrack
+    line = {"type": "LineString", "coordinates": points}
+
+    # Bottle function returns dict as JSON
     return line
-
-
