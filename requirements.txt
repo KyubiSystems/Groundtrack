@@ -1,5 +1,5 @@
 astroid==2.4.2
-bottle==0.12.18
+bottle==0.12.19
 ephem==3.7.7.0
 geojson==2.5.0
 isort==5.4.2
