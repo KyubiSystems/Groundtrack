@@ -3,7 +3,7 @@ Groundtrack
 
 **Calculate and display realtime satellite groundtracks on HTML5 map.**
 
-<img src="http://www.tigris.org.uk/images/groundtrack.png" width=100%>
+<img src="https://github.com/KyubiSystems/Groundtrack/raw/master/data/groundtrack.png" width=100%>
 
 Input TLE (Two-Line Element Set) from file or online archive. Python script calculates subsatellite ground track for past 60 minutes, returns JSON set of lat,long tuples. HTML5/Javascript calls Python script via AJAX, updates SVG plot on world map.
 
