@@ -12,3 +12,16 @@ six==1.16.0
 toml==0.10.2
 typed-ast==1.5.4
 wrapt==1.15.0
+certifi==2022.12.7
+charset-normalizer==3.0.1
+colorclass==2.2.2
+dill==0.3.6
+docopt==0.6.2
+idna==3.4
+mccabe==0.7.0
+packaging==23.0
+platformdirs==3.0.0
+requests==2.28.2
+terminaltables==3.1.10
+tomlkit==0.11.6
+urllib3==1.26.14
